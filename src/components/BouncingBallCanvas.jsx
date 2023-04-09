@@ -130,24 +130,35 @@ const BouncingBallCanvas = ({width, height}) => {
     let particles;
 
     function init() {
-        particles = [];
+      particles = [];
 
+      var retryCounter = 0;
       for (let i = 0; i < particleCount; i++) {
         const radius = particleRadius;
         let x = utils.randomIntFromRange(radius, canvas.width - radius);
         let y = utils.randomIntFromRange(radius, canvas.height - radius);
-        
+
         const color = utils.randomColor(colors);
 
         // make sure particles don't overlap
-        if(i !== 0) {
-          for(let j = 0; j < particles.length; j++) {
-            if(utils.distance(x, y, particles[j].x, particles[j].y) - radius * 2 < 0) {
+
+        if (i !== 0) {
+          for (let j = 0; j < particles.length; j++) {
+            if (utils.distance(x, y, particles[j].x, particles[j].y) - radius * 2 < 0) {
               x = utils.randomIntFromRange(radius, canvas.width - radius);
               y = utils.randomIntFromRange(radius, canvas.height - radius);
 
+              retryCounter++;
               j = -1;
             }
+            // make sure we don't get stuck in an infinite loop
+            if (retryCounter > 500) {
+              break;
+            }
+          }
+          // make sure we don't get stuck in an infinite loop
+          if (retryCounter > 500) {
+            break;
           }
         }
 
