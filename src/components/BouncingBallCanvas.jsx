@@ -5,10 +5,11 @@ import utilElasticCollision from '../js/utilElasticCollision';
 const BouncingBallCanvas = ({width, height}) => {
   //https://en.wikipedia.org/wiki/Elastic_collision
 
-  const particleCount = 100;
-  const particleSpeed = .1;
-  const particleRadius = 15;
-  const maxRadius = 17;
+  const particleCount = 75;
+  const particleSpeed = .8;
+  const particleRadius = 50;
+  const maxRadius = 55;
+  const minRadius = 15;
   const maxOpacity = 0.5;
 
   const innerWidth = width;
@@ -50,9 +51,18 @@ const BouncingBallCanvas = ({width, height}) => {
           x: (Math.random() - 0.5) * particleSpeed,
           y: (Math.random() - 0.5) * particleSpeed
         };
-        this.radius = radius;
+
+        this.radius = Math.random() * radius;
+        if (this.radius < minRadius) {
+          this.radius = minRadius;
+        }
+        this.originalRadius = this.radius;
+
         this.color = color;
-        this.mass = 1;
+
+        this.mass = this.radius;
+        this.originalMass = this.mass;
+
         this.opacity = 0;
       }
 
@@ -92,12 +102,12 @@ const BouncingBallCanvas = ({width, height}) => {
           this.radius += .05;
           this.mass += .05;
 
-        } else if (this.radius > particleRadius) {
+        } else if (this.radius > this.originalRadius) {
           this.radius -= 0.5;
           this.mass -= 0.5;
 
-          this.radius = Math.max(particleRadius, this.radius);
-          this.mass = Math.max(1, this.mass);
+          this.radius = Math.max(this.originalRadius, this.radius);
+          this.mass = Math.max(this.originalMass, this.mass);
         }
 
         // mouse collision detection (increase particle opacity)
@@ -157,7 +167,7 @@ const BouncingBallCanvas = ({width, height}) => {
 
     init();
     animate();
-  }, []);
+  }, [height, width, innerHeight, innerWidth]);
 
   return (
     <canvas id='bouncingBallCanvas' />
