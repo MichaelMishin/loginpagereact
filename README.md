@@ -1,8 +1,12 @@
 
 # Modern Login Page
 
-![](https://github.com/MichaelMishin/loginpagereact/blob/master/src/data/Look.gif)
+This project meant to showcase login animation to Main page using Framer Motion + React.  
 
+![](https://github.com/MichaelMishin/loginpagereact/blob/master/src/data/Look.gif) 
+
+
+![](https://github.com/MichaelMishin/loginpagereact/blob/master/src/data/LoginAnimation.gif)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using [clean-cra Template](https://github.com/JorgePasco1/cra-template-clean-cra).
 
